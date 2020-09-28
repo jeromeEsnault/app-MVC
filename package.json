@@ -1,0 +1,22 @@
+{
+  "name": "app-mvc",
+  "version": "1.0.0",
+  "description": "cours phiphi",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeromecool/app-MVC.git"
+  },
+  "author": "jerome",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeromecool/app-MVC/issues"
+  },
+  "homepage": "https://github.com/jeromecool/app-MVC#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
