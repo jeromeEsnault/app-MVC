@@ -1,0 +1,35 @@
+<section class="section">
+  <div class="container is is-fullhd">
+    <form action="/articles/post" method="POST">
+      <div class="field">
+        <label class="label">titre de l'article</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Text input" name="title">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Contenu</label>
+        <div class="control">
+          <textarea class="textarea" cols="5" rows="5" placeholder="Textarea" name="content"></textarea>
+        </div>
+      </div>
+        <div class="field">
+        <label class="label">Auteur</label>
+        <div class="control">
+          <input class="input" placeholder="text" name="author">
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link">Enregistrer</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light">annuler</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</section>
