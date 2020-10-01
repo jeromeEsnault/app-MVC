@@ -1,20 +1,30 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const fileupload = require('express-fileupload')
+
 require('dotenv').config()
 const app = express();
-const bodyParser = require('body-parser');
-//mogoose
-mongoose.connect(process.env.MONGO_URI);
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//express static
-app.use(express.static('public'));
+app.use(fileupload())
+
+//mogoose
+mongoose.connect(process.env.MONGO_URI);
+
+const Handlebars = require("handlebars");
+const MomentHandler = require("handlebars.moment");
+MomentHandler.registerHelpers(Handlebars);
+
 
 // post
 const Post = require("./database/models/Article")
+    //express static
+app.use(express.static('public'));
 
 //route
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
@@ -47,6 +57,10 @@ app.get("/article/add", (req, res) => {
 
 
 app.post("/articles/post", (req, res) => {
+
+    const { image } = req.files
+
+    const uploadFile = path.resolve(__dirname, 'public/articles', image.name);
 
     Post.create(req.body, (error, post) => {
         res.redirect('/')
