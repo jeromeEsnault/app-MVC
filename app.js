@@ -2,7 +2,17 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const fileupload = require('express-fileupload')
+const fileupload = require('express-fileupload');
+
+
+
+// Controller
+const createarticleController = require('./Controller/articleAdd');
+const articlePostController = require('./Controller/articlePost');
+const articleSingleController = require('./Controller/articleSingle');
+const homePageController = require('./Controller/homePage');
+const contactController = require('./Controller/contact');
+const userCreateController = require('./Controller/usercreate');
 
 require('dotenv').config()
 const app = express();
@@ -20,62 +30,30 @@ const Handlebars = require("handlebars");
 const MomentHandler = require("handlebars.moment");
 MomentHandler.registerHelpers(Handlebars);
 
-
-// post
-const Post = require("./database/models/Article")
-    //express static
+//express static
 app.use(express.static('public'));
 
 //route
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
-app.get("/", async(req, res) => {
-    const posts = await Post.find({})
-    console.log(posts);
+//middleware
+const articleValidPost = require('./middleware/articleValidPost')
+app.use("/articles/post", articleValidPost)
 
-    res.render("index", { posts })
-})
+app.get("/", homePageController)
+    // GET
+    // Articles
+app.get("/articles/:id", articleSingleController)
+app.get("/articles/add", createarticleController)
+    // Users
+app.get('/user/create', userCreateController)
+    //contact
+app.get("/contact", contactController)
 
-app.get("/contact", function(req, res) {
-    res.render("contact")
-})
+//POST
+app.post("/articles/post", articlePostController)
 
-// Articles
-
-
-app.get("/articles/:id", async(req, res) => {
-
-    const article = await Post.findById(req.params.id)
-
-    res.render("articles", { article })
-})
-
-app.get("/article/add", (req, res) => {
-    res.render("article/add")
-})
-
-
-app.post("/articles/post", (req, res) => {
-
-    const { image } = req.files
-
-    const uploadFile = path.resolve(__dirname, 'public/articles', image.name);
-
-    Post.create(req.body, (error, post) => {
-        res.redirect('/')
-    })
-    console.log(req.body);
-
-})
-
-
-app.post("/articles/post", (req, res) => {
-
-    console.log(req.body);
-
-    res.redirect('/')
-})
 app.listen(3000, function() {
     console.log("le server tourne sur le port 3000");
 })
