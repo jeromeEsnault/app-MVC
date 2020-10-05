@@ -1,3 +1,17 @@
+const User = require('../database/models/User')
+
 module.exports = (req, res) => {
-    res.render("user/register")
+
+    User.create(
+        req.body, (error, User) => {
+
+            if (error) {
+                return res.redirect('/user/create')
+
+            }
+
+
+            res.redirect('/')
+        }
+    )
 }

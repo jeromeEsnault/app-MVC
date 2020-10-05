@@ -3,7 +3,8 @@ const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fileupload = require('express-fileupload');
-
+const expressSession = require('express-session');
+const MongoStore = require('connect-mongo');
 
 
 // Controller
@@ -16,10 +17,29 @@ const contactController = require('./Controller/contact');
 
 //CONTROL GET ET POST
 const userCreateController = require('./Controller/userCreate');
-const userRegistrerController = require('./Controller/userRegister')
+const userRegistrerController = require('./Controller/userRegister');
+const userLoginController = require('./Controller/userlogin');
+const userLoginAuthController = require('./Controller/userloginAuth');
 
 require('dotenv').config()
 const app = express();
+//mogoose
+mongoose.connect(process.env.MONGO_URI);
+const mongoStore = MongoStore(expressSession);
+
+app.use(expressSession({
+    secret: 'securite',
+    name: 'biscuit',
+    saveUninitialized: true,
+    resave: false,
+
+    store: new mongoStore({ mongooseConnection: mongoose.connection })
+}))
+
+
+
+
+
 
 
 app.use(bodyParser.json())
@@ -27,8 +47,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(fileupload())
 
-//mogoose
-mongoose.connect(process.env.MONGO_URI);
+const auth = require("./middleware/auth")
+
 
 const Handlebars = require("handlebars");
 const MomentHandler = require("handlebars.moment");
@@ -44,20 +64,28 @@ app.set('view engine', 'handlebars');
 //middleware
 const articleValidPost = require('./middleware/articleValidPost')
 app.use("/articles/post", articleValidPost)
+app.use("/articles/add", auth)
 
 app.get("/", homePageController)
     // GET
-    // Articles
-app.get("/articles/:id", articleSingleController)
+
+
+// Articles
+app.get("/articles/:id", auth, articleSingleController)
 app.get("/article/add", createarticleController)
-    // Users
+app.post("/articles/post", auth, articleValidPost, articlePostController)
+
+// Users
 app.get('/user/create', userCreateController)
-app.post('/user/register',userRegistrerController)
-    //contact
+app.post('/user/register', userRegistrerController)
+app.get('/user/login', userLoginController)
+app.post('/user/loginAuth', userLoginAuthController)
+
+//contact
 app.get("/contact", contactController)
 
 //POST
-app.post("/articles/post", articlePostController)
+
 
 app.listen(3000, function() {
     console.log("le server tourne sur le port 3000");
