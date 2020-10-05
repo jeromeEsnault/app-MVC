@@ -12,7 +12,11 @@ const articlePostController = require('./Controller/articlePost');
 const articleSingleController = require('./Controller/articleSingle');
 const homePageController = require('./Controller/homePage');
 const contactController = require('./Controller/contact');
-const userCreateController = require('./Controller/usercreate');
+
+
+//CONTROL GET ET POST
+const userCreateController = require('./Controller/userCreate');
+const userRegistrerController = require('./Controller/userRegister')
 
 require('dotenv').config()
 const app = express();
@@ -45,9 +49,10 @@ app.get("/", homePageController)
     // GET
     // Articles
 app.get("/articles/:id", articleSingleController)
-app.get("/articles/add", createarticleController)
+app.get("/article/add", createarticleController)
     // Users
 app.get('/user/create', userCreateController)
+app.post('/user/register',userRegistrerController)
     //contact
 app.get("/contact", contactController)
 
