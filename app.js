@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const fileupload = require('express-fileupload');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo');
-
+const connectFlash = require('connect-flash');
 
 // Controller
 const createarticleController = require('./Controller/articleAdd');
@@ -23,9 +23,12 @@ const userLoginAuthController = require('./Controller/userloginAuth');
 
 require('dotenv').config()
 const app = express();
+
 //mogoose
 mongoose.connect(process.env.MONGO_URI);
 const mongoStore = MongoStore(expressSession);
+
+app.use(connectFlash())
 
 app.use(expressSession({
     secret: 'securite',

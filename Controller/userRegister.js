@@ -6,9 +6,13 @@ module.exports = (req, res) => {
 
             if (error) {
                 const registerError = Object.keys(error.errors).map(key => error.errors[key].message);
-                req.session.registerError = registerError
-                    //console.log(Object.keys(error.errors).map(key => error.errors[key].message));
-                    //console.log(registerError);
+
+                req.flash('registerError', registerError)
+
+
+                //req.session.registerError = registerError
+                //console.log(Object.keys(error.errors).map(key => error.errors[key].message));
+                //console.log(registerError);
                 return res.redirect('/user/create')
 
             }
