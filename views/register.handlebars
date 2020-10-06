@@ -1,5 +1,12 @@
 <section class="section">
     <div class="container is is-fullhd">
+        <div class="content">
+                <ol type="1">
+                    {{#each errors}}
+                    <li>{{this}}</li>
+                    {{/each}}
+                </ol>            
+            </div> 
         <form action="/user/register" method="POST"
             enctype="multipart/form-data">
 
@@ -10,15 +17,12 @@
                         placeholder="Text input">
                 </div>
             </div>
-
-
-
             <div class="field">
                 <label class="label">Email</label>
                 <div class="control has-icons-left has-icons-right">
                     <input class="input is-danger" type="email"
                         placeholder="Email
-                        input" name="email" value="hello@">
+                        input" name="email">
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
                     </span>
