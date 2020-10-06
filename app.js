@@ -6,6 +6,7 @@ const fileupload = require('express-fileupload');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo');
 const connectFlash = require('connect-flash');
+const { stripTags } = require('./helpers/hbs');
 
 // Controller
 const createarticleController = require('./Controller/articleAdd');
@@ -62,7 +63,12 @@ MomentHandler.registerHelpers(Handlebars);
 app.use(express.static('public'));
 
 //route
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({
+    helpers: {
+        stripTags: stripTags
+    },
+    defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
 app.use('*', (req, res, next) => {
     res.locals.user = req.session.userId;
