@@ -13,8 +13,7 @@
             <div class="field">
                 <label class="label">Name</label>
                 <div class="control">
-                    <input class="input" type="text" name="name"
-                        placeholder="Text input">
+                    <input class="input" type="text" name="name" placeholder="Text input" value={{data.name}} >
                 </div>
             </div>
             <div class="field">
@@ -22,7 +21,7 @@
                 <div class="control has-icons-left has-icons-right">
                     <input class="input is-danger" type="email"
                         placeholder="Email
-                        input" name="email">
+                        input" name="email" value={{data.email}}>
                     <span class="icon is-small is-left">
                         <i class="fas fa-envelope"></i>
                     </span>
@@ -36,7 +35,7 @@
             <div class="field">
                 <p class="control has-icons-left">
                     <input class="input" type="password" name="password"
-                        placeholder="Password">
+                        placeholder="Password" value={{data.password}}>
                     <span class="icon is-small is-left">
                         <i class="fas fa-lock"></i>
                     </span>

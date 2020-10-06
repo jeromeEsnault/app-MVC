@@ -20,6 +20,7 @@ const userCreateController = require('./Controller/userCreate');
 const userRegistrerController = require('./Controller/userRegister');
 const userLoginController = require('./Controller/userlogin');
 const userLoginAuthController = require('./Controller/userloginAuth');
+const userLagout = require('./Controller/userLagout');
 
 require('dotenv').config()
 const app = express();
@@ -51,7 +52,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileupload())
 
 const auth = require("./middleware/auth")
-
+const redirectAuthSucess = require('./middleware/redirectionAuthSucess')
 
 const Handlebars = require("handlebars");
 const MomentHandler = require("handlebars.moment");
@@ -63,14 +64,20 @@ app.use(express.static('public'));
 //route
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+app.use('*', (req, res, next) => {
+    res.locals.user = req.session.userId;
+    console.log(res.locals.user);
+    next()
+})
+
 
 //middleware
 const articleValidPost = require('./middleware/articleValidPost')
 app.use("/articles/post", articleValidPost)
 app.use("/articles/add", auth)
-
 app.get("/", homePageController)
-    // GET
+
+// GET
 
 
 // Articles
@@ -79,15 +86,18 @@ app.get("/article/add", createarticleController)
 app.post("/articles/post", auth, articleValidPost, articlePostController)
 
 // Users
-app.get('/user/create', userCreateController)
-app.post('/user/register', userRegistrerController)
-app.get('/user/login', userLoginController)
-app.post('/user/loginAuth', userLoginAuthController)
+app.get('/user/create', redirectAuthSucess, userCreateController)
+app.post('/user/register', redirectAuthSucess, userRegistrerController)
+app.get('/user/login', redirectAuthSucess, userLoginController)
+app.post('/user/loginAuth', redirectAuthSucess, userLoginAuthController)
+app.get('/user/lagout', userLagout)
 
 //contact
 app.get("/contact", contactController)
 
-//POST
+app.use((req, res) => {
+    res.render('error404')
+})
 
 
 app.listen(3000, function() {
