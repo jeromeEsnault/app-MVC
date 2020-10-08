@@ -19,11 +19,11 @@ const deleteArticle = require('./Controller/deleteArticle')
 const modifEditArticle = require('./Controller/modifedit')
 
 //CONTROL user
-const userCreateController = require('./Controller/userCreate');
+const userCreateController = require('./Controller/user/userCreate');
 const userRegistrerController = require('./Controller/userRegister');
-const userLoginController = require('./Controller/userlogin');
+const userLoginController = require('./Controller/user/userlogin');
 const userLoginAuthController = require('./Controller/userloginAuth');
-const userLagout = require('./Controller/userLagout');
+const userLagout = require('./Controller/user/userLagout');
 
 require('dotenv').config()
 const app = express();
