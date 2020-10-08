@@ -2,7 +2,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://i-maginer.com">
+      <a class="navbar-item" href="/">
         <h1 style="font-size: 2em">I-maginer</h1>
       </a>
       <a role="button" class="navbar-burger burger" aria-label="menu"
@@ -15,15 +15,6 @@
     <div id="navbarBasicExample" class="navbar-menu">
       <div class="navbar-end">
 
-
-        <div class="navbar-item">
-          <div class="buttons">
-            <a class="menu-link" href="/user/login">
-              Se connecter
-            </a>
-          </div>
-        </div>
-
         {{#if user}}
         <div class="navbar-item">
           <div class="buttons">
@@ -32,7 +23,6 @@
             </a>
           </div>
         </div>
-
 
         <div class="navbar-item">
           <div class="buttons">
@@ -46,6 +36,14 @@
 
         <div class="navbar-item">
           <div class="buttons">
+            <a class="menu-link" href="/user/login">
+              Se connecter
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item">
+          <div class="buttons">
             <a class="menu-link" href="/user/create">
               s'incrire
             </a>
@@ -53,7 +51,7 @@
         </div>
 
         {{/if}}
-        
+
         <div class="navbar-item">
           <div class="buttons">
             <a class="menu-link" href="/contact">

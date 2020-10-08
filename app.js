@@ -6,7 +6,7 @@ const fileupload = require('express-fileupload');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo');
 const connectFlash = require('connect-flash');
-const { stripTags } = require('./helpers/hbs');
+const { stripTags, limit } = require('./helpers/hbs');
 
 // Controller
 const createarticleController = require('./Controller/articleAdd');
@@ -14,9 +14,11 @@ const articlePostController = require('./Controller/articlePost');
 const articleSingleController = require('./Controller/articleSingle');
 const homePageController = require('./Controller/homePage');
 const contactController = require('./Controller/contact');
+const modifierArticle = require('./Controller/modifierarticle')
+const deleteArticle = require('./Controller/deleteArticle')
+const modifEditArticle = require('./Controller/modifedit')
 
-
-//CONTROL GET ET POST
+//CONTROL user
 const userCreateController = require('./Controller/userCreate');
 const userRegistrerController = require('./Controller/userRegister');
 const userLoginController = require('./Controller/userlogin');
@@ -65,7 +67,8 @@ app.use(express.static('public'));
 //route
 app.engine('handlebars', exphbs({
     helpers: {
-        stripTags: stripTags
+        stripTags: stripTags,
+        limit: limit
     },
     defaultLayout: 'main'
 }));
@@ -86,10 +89,14 @@ app.get("/", homePageController)
 // GET
 
 
+
 // Articles
 app.get("/articles/:id", auth, articleSingleController)
 app.get("/article/add", createarticleController)
 app.post("/articles/post", auth, articleValidPost, articlePostController)
+app.get("/modifier", modifierArticle)
+app.get("/deleteArticle/:id", deleteArticle)
+app.get("/modifier", modifEditArticle)
 
 // Users
 app.get('/user/create', redirectAuthSucess, userCreateController)
@@ -100,6 +107,8 @@ app.get('/user/lagout', userLagout)
 
 //contact
 app.get("/contact", contactController)
+
+
 
 app.use((req, res) => {
     res.render('error404')

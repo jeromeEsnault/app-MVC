@@ -13,11 +13,19 @@
         <label class="label">Contenu</label>
         <div class="control">
           <textarea class="textarea" cols="5" rows="5" placeholder="Textarea"
-            name="content"></textarea>
+            name="content" id='content'></textarea>
              <script>
                 // Replace the <textarea id="editor1"> with a CKEditor 4
                 // instance, using default configuration.
-                CKEDITOR.replace( 'content' );
+                const ed = CKEDITOR.replace('content', {
+                  uiColor: '#000000',
+                  entities: false
+                });
+                // évenement log content (value) ckeditor
+                //  https://ckeditor.com/docs/ckeditor4/latest/guide/dev_savedata.html
+                ed.on('change', function (e) {
+                  console.log(e.editor.getData())
+                })
             </script>
         </div>
       </div>
