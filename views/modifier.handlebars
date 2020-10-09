@@ -4,27 +4,31 @@
   <div class="container">
     <div class="columns">
       <div class="column">
-      
-        <article class="media notification is-warning animation">
-          <div>
+
+        <h2>Titre: {{ articles.title }}</h2>
+
+        <form action="/modifier/{{ articles._id }}" method="post" enctype='multipart/form-data'>
+          <article class="media notification is-warning animation">
             <div>
-              <img  for="image" src="{{articles.image}}">
+              <div>
+                <img for="image" src="{{articles.image}}">
+              </div>
+              <input type="file" name="image">
             </div>
-            <input type="file" name="image">
-          </div>
-          <div class="h3">
-            <input type="text" name="title" value={{articles.title}}>
-          </div>
-          <h3></h3>
-          <div>
-            <input type="text" name="content" value={{articles.content}}>
-          </div>
-        </article>
- 
+            <div class="h3">
+              <input type="text" name="title" value='{{articles.title}}'>
+              <input type="text" name="author" value='{{articles.author}}'>
+            </div>
+            <h3></h3>
+            <div>
+              <input type="text" name="content" value={{articles.content}}>
+            </div>
+          </article>
+          <button type="submit">Valider</button>
+        </form>
+
       </div>
     </div>
   </div>
 </section>
 <!-- /.section -->
-
-
